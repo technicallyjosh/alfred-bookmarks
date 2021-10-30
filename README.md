@@ -12,4 +12,15 @@ A simple and fast workflow for searching and launching Brave Browser bookmarks.
 in user's directory. If you installed Brave for all users, this may not work
 properly.***
 
+## Usage
+
+### Basic
+
+Type `bb <term>` when pulling up Alfred.
+
+### Commands
+
+- Clear cache<br>
+  Type `bb` and select `Clear cache`
+
 This is my first Alfred workflow so any suggestions or PRs are welcome!
