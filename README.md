@@ -1,26 +1,42 @@
-# Alfred Brave Browser Bookmarks
+# Alfred Browser Bookmarks
 
-A simple and fast workflow for searching and launching Brave Browser bookmarks.
+A simple and fast workflow for searching and launching browser bookmarks.
+
+***Formerly Alfred Brave Bookmarks. I wanted to expand to other browsers as I 
+tend to hop around on them :).***
+
+## Browsers supported
+
+- Brave
+- Microsoft Edge
 
 ## Why this workflow?
 
 - No python dependency
 - It's faster than the others
-- Supports all profiles
+- Supports all profiles for the selected browser
 
-***Right now this is set up to look specifically for the profiles in the logged
-in user's directory. If you installed Brave for all users, this may not work
-properly.***
+***Right now this is set up to look specifically for the profiles in the 
+logged-in user's directory. If you installed a browser for all users, this may 
+not work properly.***
 
 ## Usage
 
+### Setup
+
+- Type `bm`
+- Select "Configure"
+- Select your browser
+
 ### Basic
 
-Type `bb <term>` when pulling up Alfred.
+Type `bm <term>` when pulling up Alfred.
 
-### Commands
+### Configure
 
-- Clear cache<br>
-  Type `bb` and select `Clear cache`
+`bm` -> Configure
 
-This is my first Alfred workflow so any suggestions or PRs are welcome!
+- Set Brave Browser
+- Set Microsoft Edge Browser
+- Clear Cache
+- Clear Data

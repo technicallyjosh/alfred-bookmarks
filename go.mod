@@ -1,6 +1,6 @@
 module github.com/technicallyjosh/alfred-brave-search
 
-go 1.17
+go 1.18
 
 require github.com/deanishe/awgo v0.29.0
 
