@@ -2,7 +2,7 @@ package browser
 
 import (
 	"encoding/json"
-	"io/ioutil"
+	"os"
 	"path"
 	"strings"
 
@@ -51,7 +51,7 @@ func getChromiumBookmarkItems(config Config, wf *aw.Workflow) (allItems []Item, 
 	for _, p := range profiles {
 		filePath := path.Join(config.Directory, p, "Bookmarks")
 
-		fileBytes, err := ioutil.ReadFile(filePath)
+		fileBytes, err := os.ReadFile(filePath)
 		if err != nil {
 			continue
 		}
@@ -75,7 +75,7 @@ func getChromiumBookmarkItems(config Config, wf *aw.Workflow) (allItems []Item, 
 func getChromiumProfiles(dir string) ([]string, error) {
 	profiles := []string{"Default"}
 
-	fileInfos, err := ioutil.ReadDir(dir)
+	fileInfos, err := os.ReadDir(dir)
 	if err != nil {
 		return nil, err
 	}
