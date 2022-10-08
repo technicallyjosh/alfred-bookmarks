@@ -3,13 +3,12 @@ package main
 import (
 	"errors"
 	"flag"
-	"fmt"
 	"os"
 	"path"
 	"time"
 
 	aw "github.com/deanishe/awgo"
-	"github.com/technicallyjosh/alfred-brave-search/browser"
+	"github.com/technicallyjosh/alfred-bookmarks/browser"
 )
 
 const defaultCacheTTL = time.Hour * 1
@@ -104,15 +103,14 @@ func run() {
 
 	items, err := b.GetBookmarkItems(wf)
 	if err != nil {
-		fmt.Println(err)
 		wf.FatalError(err)
 	}
 
-	for _, item := range items {
-		wf.NewItem(item.Name).
+	for i := 0; i < len(items); i++ {
+		wf.NewItem(items[i].Name).
 			Icon(&icon).
-			Subtitle(item.URL).
-			Arg(item.URL).
+			Subtitle(items[i].URL).
+			Arg(items[i].URL).
 			Valid(true)
 	}
 
@@ -151,6 +149,14 @@ func setBrowserCache() (err error) {
 				CacheTTL:  defaultCacheTTL,
 			},
 		})
+	case "firefox":
+		err = wf.Cache.StoreJSON("browser_config", browser.Firefox{
+			Config: browser.Config{
+				Directory: path.Join(homeDir, "Library/Application Support/Firefox/Profiles"),
+				CacheName: "alfred_bookmarks:firefox",
+				CacheTTL:  defaultCacheTTL,
+			},
+		})
 	default:
 		return errors.New("invalid browser")
 	}
@@ -184,6 +190,12 @@ func getBrowserFromCache(name string) (browser.Browser, error) {
 			err = wf.Cache.LoadJSON(cacheKey, &edge)
 		}
 		b = edge
+	case "firefox":
+		var firefox browser.Firefox
+		if wf.Cache.Exists(cacheKey) {
+			err = wf.Cache.LoadJSON(cacheKey, &firefox)
+		}
+		b = firefox
 	default:
 		return nil, errors.New("invalid browser name")
 	}
@@ -192,16 +204,16 @@ func getBrowserFromCache(name string) (browser.Browser, error) {
 }
 
 func getBrowserIconPath(name string) string {
-	var iconPath string
-
-	dir := wf.Dir()
+	dir := path.Join(wf.Dir(), "List Filter Images")
 
 	switch name {
 	case "brave":
-		iconPath = path.Join(dir, "List Filter Images/9efae4be72add683de8ab34e1d6f5e40c1543522.png")
+		return path.Join(dir, "9efae4be72add683de8ab34e1d6f5e40c1543522.png")
 	case "edge":
-		iconPath = path.Join(dir, "List Filter Images/d3ec5bd1cd0d0d91fb5650c7f6cc9a6487f4e966.png")
+		return path.Join(dir, "d3ec5bd1cd0d0d91fb5650c7f6cc9a6487f4e966.png")
+	case "firefox":
+		return path.Join(dir, "ecdf9d0a155d7f261b4da277c4b83d9ddf6fb231.png")
 	}
 
-	return iconPath
+	return ""
 }
